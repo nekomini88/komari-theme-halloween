@@ -3,3 +3,4 @@ __pycache__/
 *.pyc
 scripts/api-fixtures/*.json
 tmp/
+release/
