@@ -1,0 +1,59 @@
+[
+  {
+    "target": "char",
+    "file": "char.png",
+    "account": "1009",
+    "exit": "192.3.193.180",
+    "prompt": "Anime illustration, cozy Halloween night. A tall elegant gentleman in a long black coat with\nwhite ruffled collar and cuffs, bowing down kindly: his head is a glowing carved jack-o-lantern\n(triangular eyes, triangular nose, jagged smiling mouth, warm candlelight inside the pumpkin — the\npumpkin IS his head, sitting under the brim of his hat). He wears a plain black tall top hat with only a dark hatband, the hat surface completely plain with NO pumpkin face, NO face pattern, NO lantern on the hat. Facing him, a small sweet\ngirl with long pale blonde hair, wearing a black pointed witch hat with a wide brim and a black\nlace-trimmed dress, looks up at him with a gentle smile. A black cat sits nearby. Background: an\nenormous pale full moon, gothic cathedral spires with ghost-green glowing windows, thin spider webs\nstrung between broken arches, bats crossing the sky, cold green mist on the ground. deep teal Halloween night: background #0d1c24, teal rim light #2f9ea6 and #4fc6cb, pale moon cream #eadbbf, ghost green #7fd4a2 — no purple, no magenta.\nHand-painted anime style, soft cel shading, clean lineart, half-body composition, no text, no\nletters, no watermark, no logo, no signature. 16:9 landscape",
+    "attempts": [
+      {
+        "account": "1009",
+        "exit": "192.3.193.180",
+        "result": "ok",
+        "attempt": 1,
+        "iid": "6ace57cd1f58f7fcdbfa2c38",
+        "seconds": 36.4,
+        "kb": 2157,
+        "file": "char.png"
+      }
+    ]
+  },
+  {
+    "target": "char-awake",
+    "file": "char-awake.png",
+    "account": "1009",
+    "exit": "192.3.193.180",
+    "prompt": "Anime illustration, cozy Halloween night, same two characters full of joy: the tall gentleman\nin the long black coat, his head a glowing carved jack-o-lantern grinning widely with bright warm light\ninside the pumpkin, a plain black tall top hat with only a dark hatband, the hat surface completely plain with NO pumpkin face, NO face pattern, NO lantern on the hat, raising one hand in greeting; the small sweet girl with long pale blonde\nhair and a black pointed witch hat laughing happily beside him, the black cat arching its back.\nBackground: the enormous pale full moon, gothic spires with ghost-green window light, spider webs,\nbats, cold green ground mist. deep teal Halloween night: background #0d1c24, teal rim light #2f9ea6 and #4fc6cb, pale moon cream #eadbbf, ghost green #7fd4a2 — no purple, no magenta. Hand-painted anime style, soft cel shading, clean lineart,\nhalf-body composition, no text, no letters, no watermark, no logo, no signature. 16:9 landscape",
+    "attempts": [
+      {
+        "account": "1009",
+        "exit": "192.3.193.180",
+        "result": "ok",
+        "attempt": 1,
+        "iid": "6ace57f2f668a7c39b3978bb",
+        "seconds": 33.2,
+        "kb": 2167,
+        "file": "char-awake.png"
+      }
+    ]
+  },
+  {
+    "target": "og",
+    "file": "og.png",
+    "account": "1009",
+    "exit": "192.3.193.180",
+    "prompt": "Anime illustration, wide cinematic Halloween night banner: on the right, a tall gentleman in a\nlong black coat with a white ruffled collar, his head a glowing carved jack-o-lantern, wearing a plain black tall top hat with only a dark hatband, the hat surface completely plain with NO pumpkin face, NO face pattern, NO lantern on the hat,\nstands beside a small blonde girl in a black pointed witch hat and black lace dress, a black cat at\ntheir feet; behind them an enormous pale full moon, gothic cathedral spires with ghost-green glowing\nwindows receding into mist, thin spider webs, bats overhead, cold green ground glow. deep teal Halloween night: background #0d1c24, teal rim light #2f9ea6 and #4fc6cb, pale moon cream #eadbbf, ghost green #7fd4a2 — no purple, no magenta.\nHand-painted anime style, calm and atmospheric, the left half mostly empty, no text, no letters, no\nwatermark, no logo, no signature. 16:9 landscape",
+    "attempts": [
+      {
+        "account": "1009",
+        "exit": "192.3.193.180",
+        "result": "ok",
+        "attempt": 1,
+        "iid": "6ace5813f668a7c39b397db2",
+        "seconds": 32.8,
+        "kb": 2106,
+        "file": "og.png"
+      }
+    ]
+  }
+]

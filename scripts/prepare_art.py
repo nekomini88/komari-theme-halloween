@@ -11,8 +11,10 @@ import sys
 from PIL import Image
 
 ROOT = pathlib.Path('/root/komari-halloween')
+_V3 = ROOT / 'art-raw' / 'v3-faithful'
 _V2 = ROOT / 'art-raw' / 'v2-teal'
-ART = _V2 if (_V2 / 'char.png').exists() else ROOT / 'art-raw'
+# 优先级：v3-faithful（忠实还原参考图，帽子已修正）> v2-teal > art-raw
+ART = _V3 if (_V3 / 'char.png').exists() else (_V2 if (_V2 / 'char.png').exists() else ROOT / 'art-raw')
 
 
 def fit(src_path, size, out_path):
