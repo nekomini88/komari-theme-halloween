@@ -1,0 +1,119 @@
+{
+  "name": "Komari-Halloween",
+  "short": "Komari-Halloween",
+  "description": "万圣节主题 · 紫夜底 + 南瓜橙 + 烛光暖黄 · 甜系女巫立绘 + 动漫 HUD 监控面板（基于 NanoMuse 改造）",
+  "version": "1.0.0",
+  "author": "Neko（基于 Miuler 的 NanoMuse 改造）",
+  "url": "https://github.com/nekomini88/komari-theme-halloween",
+  "preview": "preview.png",
+  "configuration": {
+    "type": "managed",
+    "name": "[ NANOMUSE ] 主题配置",
+    "data": [
+      {
+        "name": "◇ PANEL INFO // 面板标识",
+        "type": "title"
+      },
+      {
+        "key": "version_tag",
+        "name": "[ SYS.VER ] 版本标识",
+        "type": "string",
+        "default": "v1.3.1",
+        "help": "面板版本号 — 显示于导航栏、页脚及HUD面板"
+      },
+      {
+        "key": "footer_text",
+        "name": "[ FOOTER ] 状态栏文字",
+        "type": "string",
+        "default": "SYSTEM MONITORING ACTIVE",
+        "help": "底部状态栏文字"
+      },
+      {
+        "name": "◇ CHARACTER // 角色系统",
+        "type": "title"
+      },
+      {
+        "key": "bg_video",
+        "name": "[ VIDEO ] 背景视频链接",
+        "type": "string",
+        "default": "",
+        "help": "Hero区域背景视频 — 支持MP4/WebM，留空使用静态角色图。填写后角色图自动隐藏"
+      },
+      {
+        "key": "bg_video_opacity",
+        "name": "[ VIDEO ] 视频透明度",
+        "type": "string",
+        "default": "0.7",
+        "help": "背景视频透明度 0.0~1.0，建议0.5~0.8"
+      },
+      {
+        "key": "char_url",
+        "name": "[ CHAR ] 角色图片链接",
+        "type": "string",
+        "default": "",
+        "help": "Hero区域角色图（离线/默认状态） — 留空使用默认 char.png"
+      },
+      {
+        "key": "char_awake_url",
+        "name": "[ CHAR.AWAKE ] 全在线角色图",
+        "type": "string",
+        "default": "",
+        "help": "全部节点在线时的角色图 — 留空使用默认 char-awake.png"
+      },
+      {
+        "key": "bg_video_awake",
+        "name": "[ VIDEO.AWAKE ] 全在线背景视频",
+        "type": "string",
+        "default": "",
+        "help": "全部节点在线时切换的背景视频 — 留空则显示睁眼角色图"
+      },
+      {
+        "name": "◇ ANNOUNCE // 公告系统",
+        "type": "title"
+      },
+      {
+        "key": "announce_text",
+        "name": "[ NOTICE ] 公告内容",
+        "type": "string",
+        "default": "",
+        "help": "首页公告 — 留空隐藏公告栏"
+      },
+      {
+        "name": "◇ ALERT THRESHOLD // 告警阈值",
+        "type": "title"
+      },
+      {
+        "key": "alert_cpu",
+        "name": "[ CPU ] 告警阈值 (%)",
+        "type": "string",
+        "default": "80",
+        "help": "CPU 使用率超过此值时卡片高亮警告（0-100）"
+      },
+      {
+        "key": "alert_ram",
+        "name": "[ RAM ] 告警阈值 (%)",
+        "type": "string",
+        "default": "80",
+        "help": "内存使用率超过此值时卡片高亮警告（0-100）"
+      },
+      {
+        "key": "alert_disk",
+        "name": "[ DISK ] 告警阈值 (%)",
+        "type": "string",
+        "default": "90",
+        "help": "磁盘使用率超过此值时卡片高亮警告（0-100）"
+      },
+      {
+        "name": "◇ IP DETECTION // 访客识别",
+        "type": "title"
+      },
+      {
+        "key": "proxycheck_key",
+        "name": "[ PROXYCHECK ] API Key",
+        "type": "string",
+        "default": "",
+        "help": "proxycheck.io API Key — 用于检测访客 VPN/代理/风险等级。免费注册：https://proxycheck.io （每日1000次免费额度）。注册后在 Dashboard 页面复制 API Key 填入此处，并在 CORS 标签页添加你的域名。留空则跳过风险检测，仅显示基础地理信息。"
+      }
+    ]
+  }
+}

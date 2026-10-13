@@ -1,0 +1,271 @@
+/* ============================================================================
+   Komari-Halloween 皮肤层 v2（覆盖式）
+   ----------------------------------------------------------------------------
+   底座：NanoMuse 单文件构建（内联样式 44 个 CSS 变量，亮/暗两套值）
+   做法：同名变量覆盖 + 字面色值重映射 + 装饰层。不改压缩后的底座样式。
+
+   配色口径（用户确认）：紫夜底 + 南瓜橙 + 烛光暖黄
+   v2 修订（据首版视觉复盘）：
+     · 两个模式一律夜色 —— 首版把「亮色」做成浅紫暮色，导致左右侧栏大片浅白，
+       把夜景氛围整个破坏；现改为「深夜 + 迟暮」两档紫夜，都不出现白面板。
+     · 收紧强调色：去掉品红/正绿/亮黄三色打架，统一为
+       南瓜橙（主）/ 烛光暖黄（次）/ 女巫紫（第三）/ 暖白（文字），
+       语义色保留但降饱和并偏暖：在线=苔绿、告警=血红橙。
+     · 提高深底文字对比：三级/四级文字整体提亮，小字不再发灰。
+     · 装饰重排：月亮完整不裁切、蛛网移出导航区、蝙蝠改为可见的深紫+边缘暖光、
+       南瓜灯加暖光外溢；新增一层雾气与暗角，让紫底有纵深不发脏。
+   ============================================================================ */
+
+/* ---------- 调色板（唯一真源） ---------- */
+:root {
+  /* 夜之层 */
+  --ha-0: #0d0718;            /* 最深：页面底 */
+  --ha-1: #150c26;            /* 面板底 */
+  --ha-2: #1e1136;            /* 卡片底 */
+  --ha-3: #2a1747;            /* 浮起/悬停 */
+  --ha-4: #3a2158;            /* 分隔与描边 */
+  /* 光之层 */
+  --ha-pumpkin: #f97316;      /* 南瓜橙：主强调 */
+  --ha-pumpkin-deep: #c2410c; /* 南瓜橙暗部 */
+  --ha-candle: #fcd34d;       /* 烛光暖黄：次强调 / 数字 */
+  --ha-candle-soft: #ffe8b8;  /* 烛光晕 */
+  --ha-plum: #a855f7;         /* 女巫紫：第三强调（魔法/第二通道） */
+  --ha-ink-hi: #fbf3e6;       /* 一级文字：暖白（比纯白柔和、在紫底更清楚） */
+  --ha-ink: #e8d9f5;          /* 二级 */
+  --ha-ink-mid: #e0cff7;      /* 三级（v4 再提亮，供小标签） */
+  --ha-ink-dim: #cbb4e8;      /* 四级（v4 再提亮，供日志/辅助字） */
+  --ha-ink-faint: #b9a2d6;    /* 五级：装饰性小字 */
+  --ha-ink-ghost: #9b82c4;    /* 六级（v5 提亮：实测 7-8px 小标签需 ≥4.5:1） */
+  /* 语义色（降饱和、偏暖，仍可与橙区分） */
+  --ha-online: #8fce9b;       /* 苔绿：在线 */
+  --ha-warn: #fbbf24;         /* 烛黄：注意 */
+  --ha-alert: #fb5f6d;        /* 血红橙：告警 */
+  /* 线 */
+  --ha-line: rgba(249, 115, 22, 0.22);
+  --ha-line-hi: rgba(252, 211, 77, 0.45);
+}
+
+/* ---------- 1) 默认：万圣深夜 ---------- */
+:root {
+  --bg: var(--ha-1);
+  --nc-bg: var(--ha-2);
+  --card-bg: rgba(44, 26, 74, 0.86);
+  --card-bg-hover: rgba(58, 34, 94, 0.94);
+  --glass: rgba(42, 25, 72, 0.90);
+  --glass2: rgba(56, 33, 92, 0.94);
+  --panel: var(--glass);
+  --panel-inner: var(--glass2);
+
+  --cyan: var(--ha-pumpkin);
+  --cyan-rgb: 249, 115, 22;
+  --cyan-g: rgba(249, 115, 22, 0.5);
+  --cyan-soft: rgba(249, 115, 22, 0.08);
+  --cyan-border: rgba(249, 115, 22, 0.26);
+  --accent: var(--ha-pumpkin);
+  --accent-light: var(--ha-candle);
+
+  --blue: var(--ha-plum);
+  --blue-r: 168, 85, 247;
+  --blue-g: rgba(168, 85, 247, 0.32);
+
+  --g: var(--ha-online);
+  --gr: 143, 206, 155;
+  --r: var(--ha-alert);
+  --rr: 251, 95, 109;
+  --am: var(--ha-warn);
+  --amr: 251, 191, 36;
+
+  --t: var(--ha-ink-hi);
+  --t2: var(--ha-ink);
+  --t3: var(--ha-ink-mid);
+  --t4: var(--ha-ink-dim);
+  --t5: var(--ha-ink-ghost);
+  --text: var(--t);
+  --text-hi: var(--t);
+  --sub: var(--t2);
+  --ghost: var(--t4);
+
+  --border: var(--ha-line);
+  --border-hover: var(--ha-line-hi);
+  --gborder: rgba(249, 115, 22, 0.24);
+  --corner-color: rgba(252, 211, 77, 0.55);
+  --rail: rgba(249, 115, 22, 0.32);
+  --grid-color: rgba(168, 85, 247, 0.10);
+  --glow: 0 0 28px rgba(249, 115, 22, 0.20);
+}
+
+/* ---------- 2) 「亮色」档＝万圣迟暮（仍是夜，只是紫更浅、光更柔） ---------- */
+[data-theme="light"] {
+  --bg: #241640;
+  --nc-bg: #2c1b4d;
+  --card-bg: rgba(58, 33, 92, 0.72);
+  --card-bg-hover: rgba(74, 43, 114, 0.86);
+  --glass: rgba(50, 29, 84, 0.82);
+  --glass2: rgba(66, 38, 106, 0.88);
+  --panel: var(--glass);
+  --panel-inner: var(--glass2);
+
+  --t: #fdf6ec;
+  --t2: #f0e2fb;
+  --t3: #dcc8f2;
+  --t4: #c3aade;
+  --t5: #7a5ca0;
+  --text: var(--t);
+  --text-hi: var(--t);
+  --sub: var(--t2);
+  --ghost: var(--t4);
+
+  --border: rgba(252, 211, 77, 0.24);
+  --border-hover: rgba(252, 211, 77, 0.55);
+  --gborder: rgba(252, 211, 77, 0.22);
+  --rail: rgba(252, 211, 77, 0.34);
+  --grid-color: rgba(252, 211, 77, 0.08);
+  --glow: 0 0 26px rgba(252, 211, 77, 0.18);
+}
+
+/* ============================================================================
+   3) 氛围层：雾气 + 月晕 + 暗角（纯 CSS，pointer-events:none，不遮数据）
+   ============================================================================ */
+html::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(115% 85% at 84% -12%, rgba(252, 211, 77, 0.16) 0%, rgba(249, 115, 22, 0.06) 24%, transparent 50%),
+    radial-gradient(90% 70% at 6% 104%, rgba(168, 85, 247, 0.14) 0%, transparent 56%),
+    radial-gradient(150% 130% at 50% 46%, transparent 52%, rgba(6, 3, 12, 0.50) 100%);
+}
+[data-theme="light"] html::after {
+  background:
+    radial-gradient(115% 85% at 84% -12%, rgba(252, 211, 77, 0.14) 0%, transparent 48%),
+    radial-gradient(150% 130% at 50% 46%, transparent 58%, rgba(20, 8, 38, 0.34) 100%);
+}
+
+/* 3.1 雾带：横向缓慢漂移的薄雾，让紫底有纵深 */
+.ha-fog {
+  position: fixed;
+  left: -20%;
+  right: -20%;
+  height: 42vh;
+  bottom: -6vh;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(60% 100% at 20% 70%, rgba(168, 85, 247, 0.10) 0%, transparent 66%),
+    radial-gradient(55% 100% at 62% 78%, rgba(249, 115, 22, 0.07) 0%, transparent 68%),
+    radial-gradient(70% 100% at 88% 68%, rgba(120, 80, 200, 0.08) 0%, transparent 70%);
+  filter: blur(34px);
+  animation: ha-drift 46s ease-in-out infinite;
+}
+
+/* 3.2 月亮：完整露出，避开右侧面板与顶栏 */
+body::before {
+  content: "";
+  position: fixed;
+  top: 96px;
+  left: 46px;
+  width: 132px;
+  height: 132px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle at 36% 34%, #fffaf0 0%, #fde9a8 46%, rgba(252, 211, 77, 0.42) 64%, transparent 76%);
+  box-shadow: 0 0 90px 26px rgba(252, 211, 77, 0.18);
+  animation: ha-candle 7.5s ease-in-out infinite;
+}
+body::before,
+body::after { z-index: 0; }
+
+/* 3.3 蛛网：只占最角上一次，避开 logo 与导航（放在右下角，那里最空） */
+.ha-web {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  width: 210px;
+  height: 210px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.62;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: right bottom;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg fill='none' stroke='%23fcd34d' stroke-width='0.6' opacity='0.9'%3E%3Cpath d='M100 100 L100 0 M100 100 L30 30 M100 100 L0 100'/%3E%3Cpath d='M78 100 Q78 78 100 78 M55 100 Q55 55 100 55 M32 100 Q32 32 100 32'/%3E%3Cpath d='M50 100 Q58 58 100 50 M22 100 Q38 38 100 22'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* 3.4 蝙蝠群：深紫剪影 + 暖色边缘光，确保在夜底可见 */
+.ha-bats {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.ha-bats i {
+  position: absolute;
+  display: block;
+  width: 42px;
+  height: 21px;
+  opacity: 0.78;
+  background-repeat: no-repeat;
+  background-size: contain;
+  filter: drop-shadow(0 0 7px rgba(252, 211, 77, 0.55));
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 32'%3E%3Cpath fill='%233a2158' stroke='%23fcd34d' stroke-width='0.8' d='M32 9c-4-6-10-8-16-6 3 3 4 6 4 9-5-3-11-3-16 1 6 1 10 4 13 8 4-2 8-2 12 1 3-4 5-8 3-13zm0 0c4-6 10-8 16-6-3 3-4 6-4 9 5-3 11-3 16 1-6 1-10 4-13 8-4-2-8-2-12 1-3-4-5-8-3-13z'/%3E%3C/svg%3E");
+}
+.ha-bats i:nth-child(1) { top: 15%; left: 26%; animation: ha-float 19s ease-in-out infinite; }
+.ha-bats i:nth-child(2) { top: 22%; left: 58%; width: 20px; height: 10px; animation: ha-float 23s ease-in-out infinite reverse; }
+.ha-bats i:nth-child(3) { top: 62%; left: 10%; width: 16px; height: 8px;  opacity: 0.45; animation: ha-float 27s ease-in-out infinite; }
+.ha-bats i:nth-child(4) { top: 74%; left: 84%; width: 22px; height: 11px; opacity: 0.4; animation: ha-float 21s ease-in-out infinite reverse; }
+
+/* 3.5 南瓜灯：左下角一盏 + 暖光外溢；小屏缩小避免压到底部统计 */
+.ha-pumpkin {
+  position: fixed;
+  left: 6px;
+  bottom: 8px;
+  width: 120px;
+  height: 120px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.95;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Cg%3E%3Cpath fill='%23f97316' d='M60 22c23 0 41 16 41 38s-18 42-41 42S19 82 19 60 37 22 60 22z'/%3E%3Cpath fill='%23c2410c' d='M60 22c12 0 22 4 29 12-9 6-18 9-29 9s-20-3-29-9c7-8 17-12 29-12z' opacity='.5'/%3E%3Cpath fill='%23120a1e' d='M55 14h10v14H55z'/%3E%3Cpath fill='%23fff3c4' d='M40 50l13 11-13 6zM80 50l-13 11 13 6z'/%3E%3Cpath fill='%23fff3c4' d='M38 78q22 16 44 0-7 12-22 12t-22-12z'/%3E%3C/g%3E%3C/svg%3E");
+  filter: drop-shadow(0 0 34px rgba(249, 115, 22, 0.55));
+  animation: ha-candle 5.2s ease-in-out infinite;
+}
+@media (max-width: 1100px) { .ha-pumpkin { width: 84px; height: 84px; opacity: 0.8; } }
+
+/* 3.6 只给装饰性文字加暖光；正文与数字不加 glow（保可读性） */
+h1, h2, [class*="logo"] { text-shadow: 0 0 20px rgba(249, 115, 22, 0.30); }
+
+/* 3.7 卡片与描边：暖边 + 夜影，解决深紫卡片与深紫底分不清 */
+[class*="card"], [class*="panel"], [class*="chart-wrap"] {
+  border-color: rgba(252, 211, 77, 0.18) !important;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.42), 0 0 0 1px rgba(252, 211, 77, 0.07) inset;
+}
+[class*="label"], [class*="caption"], [class*="hint"], [class*="sub"], [class*="log"],
+[class*="meta"], [class*="unit"], small { color: var(--t3) !important; }
+
+/* 3.8 关键帧 */
+@keyframes ha-candle {
+  0%, 100% { opacity: 0.94; }
+  34%      { opacity: 0.80; }
+  62%      { opacity: 1; }
+}
+@keyframes ha-float {
+  0%   { transform: translate(0, 0) rotate(-3deg); }
+  25%  { transform: translate(30px, -16px) rotate(4deg); }
+  50%  { transform: translate(-16px, -30px) rotate(-2deg); }
+  75%  { transform: translate(20px, -10px) rotate(3deg); }
+  100% { transform: translate(0, 0) rotate(-3deg); }
+}
+@keyframes ha-drift {
+  0%, 100% { transform: translateX(-3%) scaleY(1); }
+  50%      { transform: translateX(3%) scaleY(1.08); }
+}
+
+/* 3.9 尊重「减少动态效果」 */
+@media (prefers-reduced-motion: reduce) {
+  body::before, .ha-pumpkin, .ha-bats i, .ha-fog { animation: none !important; }
+}
