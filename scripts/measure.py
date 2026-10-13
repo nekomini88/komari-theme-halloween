@@ -16,9 +16,13 @@ with sync_playwright() as p:
         const r = e.getBoundingClientRect();
         if (r.width < 120 || r.height < 80) continue;
         const bg = getComputedStyle(e).backgroundColor;
-        const m = bg.match(/rgba?\\(([\\d.]+), ?([\\d.]+), ?([\\d.]+)/);
+        const m = bg.match(/rgba?\\(([\\d.]+), ?([\\d.]+), ?([\\d.]+)(?:, ?([\\d.]+))?\\)/);
         if (!m) continue;
-        const lum = 0.2126 * +m[1] + 0.7152 * +m[2] + 0.0722 * +m[3];
+        // 按 alpha 合成到 body 底色上再判亮度：低透明度不该被当成浅底（实测 0.02 误报）
+        const pm = getComputedStyle(document.body).backgroundColor.match(/\\(([\\d.]+), ?([\\d.]+), ?([\\d.]+)/) || [0, '13', '28', '36'];
+        const a = m[4] === undefined ? 1 : +m[4];
+        const comp = [1, 2, 3].map(i => +pm[i] + (+m[i] - +pm[i]) * a);
+        const lum = 0.2126 * comp[0] + 0.7152 * comp[1] + 0.0722 * comp[2];
         if (lum > 150) out.push({cls: String(e.className).slice(0, 40), bg, w: Math.round(r.width), h: Math.round(r.height), lum: Math.round(lum)});
       }
       return out;

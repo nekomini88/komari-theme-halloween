@@ -11,7 +11,7 @@ import subprocess
 ROOT = pathlib.Path('/root/komari-halloween')
 DIST = ROOT / 'dist'
 THEME_DIR = pathlib.Path('/home/project/komari/data/theme/Komari-Halloween')
-VERSION = '1.0.0'
+VERSION = '1.1.0'
 
 
 def run(cmd, cwd=None, check=True):
