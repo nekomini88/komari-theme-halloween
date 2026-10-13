@@ -1,0 +1,106 @@
+name: Release On Version Bump
+
+on:
+  push:
+    branches:
+      - main
+  # 手动补发：Release 步骤失败时从 Actions 页重跑，不必再造版本号
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-on-version-bump-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Detect version bump
+        id: version
+        env:
+          BEFORE_SHA: ${{ github.event.before }}
+        run: |
+          node <<'NODE' >> "$GITHUB_OUTPUT"
+          const { execFileSync } = require('node:child_process')
+          const { readFileSync } = require('node:fs')
+          const zeroSha = '0000000000000000000000000000000000000000'
+          const beforeSha = process.env.BEFORE_SHA
+          const readJson = p => JSON.parse(readFileSync(p, 'utf8'))
+          const readJsonAt = (rev, p) => JSON.parse(execFileSync('git', ['show', `${rev}:${p}`], { encoding: 'utf8' }))
+
+          const manifest = readJson('komari-theme.json')
+          const currentVersion = manifest.version
+          let versionChanged = true
+          if (beforeSha && beforeSha !== zeroSha) {
+            try { versionChanged = readJsonAt(beforeSha, 'komari-theme.json').version !== currentVersion } catch { versionChanged = true }
+          }
+          console.log(`current_version=${currentVersion}`)
+          console.log(`version_changed=${versionChanged}`)
+          console.log(`release_tag=v${currentVersion}`)
+          NODE
+
+      - name: Skip when version is unchanged
+        if: steps.version.outputs.version_changed != 'true'
+        run: echo "komari-theme.json 版本未变，跳过发布。"
+
+      - name: Pack theme zip
+        if: steps.version.outputs.version_changed == 'true'
+        env:
+          TAG: ${{ steps.version.outputs.release_tag }}
+        run: |
+          set -euo pipefail
+          NAME="komari-theme-Komari-Halloween-${TAG}-${GITHUB_SHA::7}"
+          mkdir -p release
+          # 主题包 = dist/ + 清单 + 预览图（Komari 可直接导入）
+          zip -qr "release/${NAME}.zip" dist komari-theme.json preview.png
+          ls -la release/
+
+      - name: Check release tag state
+        if: steps.version.outputs.version_changed == 'true'
+        id: tag
+        env:
+          RELEASE_TAG: ${{ steps.version.outputs.release_tag }}
+          CURRENT_SHA: ${{ github.sha }}
+        run: |
+          git fetch --force --tags
+          if git rev-parse "refs/tags/${RELEASE_TAG}" >/dev/null 2>&1; then
+            tag_sha="$(git rev-list -n 1 "${RELEASE_TAG}")"
+            if [ "${tag_sha}" != "${CURRENT_SHA}" ]; then
+              echo "标签 ${RELEASE_TAG} 已存在于 ${tag_sha}，与当前提交不一致。" >&2
+              exit 1
+            fi
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create and push release tag
+        if: steps.version.outputs.version_changed == 'true' && steps.tag.outputs.exists == 'false'
+        env:
+          RELEASE_TAG: ${{ steps.version.outputs.release_tag }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "${RELEASE_TAG}" -m "Release ${RELEASE_TAG}"
+          git push origin "${RELEASE_TAG}"
+
+      - name: Create or update GitHub release
+        if: steps.version.outputs.version_changed == 'true'
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: ${{ steps.version.outputs.release_tag }}
+          name: ${{ steps.version.outputs.release_tag }}
+          target_commitish: ${{ github.sha }}
+          generate_release_notes: true
+          overwrite_files: true
+          fail_on_unmatched_files: true
+          files: |
+            release/komari-theme-Komari-Halloween-*.zip
