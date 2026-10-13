@@ -1,0 +1,59 @@
+[
+  {
+    "target": "char",
+    "file": "char.png",
+    "account": "1009",
+    "exit": "192.3.193.180",
+    "prompt": "Anime illustration, cozy Halloween night mood. A sweet young girl with long pale blonde hair,\nwearing a black lace-trimmed dress, lifting a tall black top hat with both hands — the hat's crown\nglows from within with a carved jack-o-lantern face, warm candlelight spilling out. A small black cat\nsits beside her. Behind her: a huge pale full moon, gothic cathedral spires with faint ghost-green\nglowing windows, thin spider webs strung between ruined arches, bats scattered across the sky, cold\ngreen ground glow rising like mist. deep teal night palette: background #0d1c24, glow and rim light #2f9ea6 and #4fc6cb, pale moon cream #eadbbf, ghost green #7fd4a2 — no purple, no magenta, no orange. Hand-painted anime style, soft cel shading, clean lines,\nhalf-body composition placed on the right side with generous empty space on the left, no text, no\nletters, no watermark, no logo, no signature, no border. 16:9 landscape",
+    "attempts": [
+      {
+        "account": "1009",
+        "exit": "192.3.193.180",
+        "result": "ok",
+        "attempt": 1,
+        "iid": "6ace54901f58f7fcdbf98ecc",
+        "seconds": 73.5,
+        "kb": 2323,
+        "file": "char.png"
+      }
+    ]
+  },
+  {
+    "target": "char-awake",
+    "file": "char-awake.png",
+    "account": "1009",
+    "exit": "192.3.193.180",
+    "prompt": "Anime illustration, cozy Halloween night mood, same sweet young blonde girl in the black\nlace-trimmed dress, now with bright open eyes and a lively happy expression, both arms raised holding\nthe tall black top hat high overhead, its carved jack-o-lantern face blazing with warm light that lights\nup her face. The small black cat stretches up on its hind legs toward the hat. Behind her: the huge pale\nfull moon, gothic spires with ghost-green windows, bats in flight, spider webs, cold green mist. deep teal night palette: background #0d1c24, glow and rim light #2f9ea6 and #4fc6cb, pale moon cream #eadbbf, ghost green #7fd4a2 — no purple, no magenta, no orange.\nHand-painted anime style, soft cel shading, clean lines, half-body composition on the right side with\ngenerous empty space on the left, no text, no letters, no watermark, no logo, no signature. 16:9 landscape",
+    "attempts": [
+      {
+        "account": "1009",
+        "exit": "192.3.193.180",
+        "result": "ok",
+        "attempt": 1,
+        "iid": "6ace54d996d4b07605dde106",
+        "seconds": 34.0,
+        "kb": 2056,
+        "file": "char-awake.png"
+      }
+    ]
+  },
+  {
+    "target": "og",
+    "file": "og.png",
+    "account": "1009",
+    "exit": "192.3.193.180",
+    "prompt": "Anime illustration, wide cinematic Halloween night banner. A small girl in a black dress with\npale blonde hair stands holding a glowing carved jack-o-lantern top hat, beside a black cat and a stone\ngothic arch, under an enormous pale full moon; gothic cathedral spires and ghost-green glowing windows\nrecede into mist, bats and thin spider webs overhead, cold green ground glow. deep teal night palette: background #0d1c24, glow and rim light #2f9ea6 and #4fc6cb, pale moon cream #eadbbf, ghost green #7fd4a2 — no purple, no magenta, no orange. Hand-painted\nanime style, calm and atmospheric, the left half left mostly empty for a title, no text, no letters,\nno watermark, no logo, no signature. 16:9 landscape",
+    "attempts": [
+      {
+        "account": "1009",
+        "exit": "192.3.193.180",
+        "result": "ok",
+        "attempt": 1,
+        "iid": "6ace54fb2a183d5a3463751c",
+        "seconds": 35.6,
+        "kb": 2011,
+        "file": "og.png"
+      }
+    ]
+  }
+]

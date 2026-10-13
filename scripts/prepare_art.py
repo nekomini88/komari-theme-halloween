@@ -2,6 +2,8 @@
 
 原版尺寸：char.png 1024×687（右透水印式立绘）/ char-awake.png 1248×832 /
          og-image.png 1200×630 / preview.png 1280×640（preview 用截图生成，不走这里）
+
+源目录优先用 art-raw/v2-teal（深青方案，按用户新参考图出图），没有才回落 art-raw。
 """
 import pathlib
 import sys
@@ -9,7 +11,8 @@ import sys
 from PIL import Image
 
 ROOT = pathlib.Path('/root/komari-halloween')
-ART = ROOT / 'art-raw'
+_V2 = ROOT / 'art-raw' / 'v2-teal'
+ART = _V2 if (_V2 / 'char.png').exists() else ROOT / 'art-raw'
 
 
 def fit(src_path, size, out_path):
